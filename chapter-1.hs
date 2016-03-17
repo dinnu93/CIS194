@@ -1,4 +1,5 @@
 -- Credit Card Validator
+-- Exercise-1
 
 toDigits :: Integer -> [Integer]
 toDigits n
@@ -8,20 +9,25 @@ toDigits n
 toDigitsRev :: Integer -> [Integer]
 toDigitsRev n = reverse (toDigits n)
     
-lastSecond :: [a] -> a
-lastSecond ls = head (drop ((length ls)-2) ls)
+-- Exercise-2
 
 doubleEveryOther :: [Integer] -> [Integer]
 doubleEveryOther [] = []
 doubleEveryOther (x:[]) = [x]
-doubleEveryOther zs = (doubleEveryOther (take ((length zs)-2) zs)) ++ [2*(lastSecond zs), (last zs)]
+doubleEveryOther zs = reverse $ map (\s -> if (odd s) then 2*((reverse zs) !! s) else (reverse zs) !! s) [0..((length zs)-1)] 
+
+-- Exercise-3
 
 sumDigits :: [Integer] -> Integer
 sumDigits [] = 0
 sumDigits (x:xs) = (sum (toDigits x)) + (sumDigits xs)
 
+-- Exercise-4
+
 validate :: Integer -> Bool
 validate n = (mod (sumDigits (doubleEveryOther (toDigits n))) 10) == 0
+
+-- Exercise-5
 
 -- Towers of Hanoi Problem
 

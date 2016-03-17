@@ -54,4 +54,4 @@ allowedLogMessage (LogMessage (Error s) _ _)
 allowedLogMessage (LogMessage _ _ _) = False
 
 whatWentWrong :: [LogMessage] -> [String]
-whatWentWrong logMsgList = map (\logMsg@(LogMessage _ _ msg) -> msg)  $ filter allowedLogMessage logMsgList
+whatWentWrong logMsgList = map (\logMsg@(LogMessage (Error s) _ msg) -> msg)  $ filter allowedLogMessage logMsgList
