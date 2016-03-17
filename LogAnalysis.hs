@@ -5,5 +5,15 @@ import Log
 
 parseMessage :: String -> LogMessage
 parseMessage s
-  | ls !! 0 /= 1  = Unknown s
-  where ls = [x | x <- [1..((length s)-1)], s !! x == ' ']
+  | null wordList = Unknown s
+  | length firstWord /= 1 = Unknown s
+  | firstWord == "E" = LogMessage (Error (read (wordList !! 1) :: Int)) (read (wordList !! 2) :: Int) (unwords (drop 3 wordList)) 
+  | firstWord == "I" = LogMessage Info (read (wordList !! 1) :: Int) (unwords (drop 2 wordList))
+  | firstWord == "W" = LogMessage Warning (read (wordList !! 1) :: Int) (unwords (drop 2 wordList))
+  | otherwise = Unknown s
+  where wordList = words s
+        firstWord = head wordList
+
+
+parse :: String -> [LogMessage]
+parse s = map parseMessage $ lines s
