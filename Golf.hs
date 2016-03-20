@@ -28,6 +28,12 @@ localMaxima ls = map (ls !!) $ filter (\i -> ((ls !! i) > (ls !! (i+1))) && ((ls
 -- (inclusive), and outputs a vertical histogram showing how many of each
 -- number were in the input list
 
-histogram :: [Int] -> [Int]
-histogram ls = 
-  where lenList = (map length) . L.group . L.sort $ ls
+histogram :: [Int] -> String
+histogram ls = foldl (++) [] $ map (++"\n") $ totalString
+  where lenList = map (\e -> (head e,length e)) $ L.group . L.sort $ ls
+        drawList = map (\e -> (e,0)) $ filter (not . (`elem` (L.nub ls))) $ [0..9]
+        actList = map snd $ L.sort $ lenList ++ drawList
+        maxFreq = maximum . (map snd) $ lenList
+        endString = [replicate 10 '=' , (foldl (++) [] $ map show [0..9])]
+        totalString = (L.transpose $  map (\i -> (replicate (maxFreq-i) ' ') ++ (replicate i '*')) actList) ++ endString
+
