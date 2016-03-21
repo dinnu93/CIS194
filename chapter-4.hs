@@ -66,3 +66,12 @@ map' f = foldr (\x acc -> f x : acc) []
 
 myFoldl :: (a -> b -> a) -> a -> [b] -> a
 myFoldl f base  = foldr (flip f) base . reverse   
+
+-- Exercise-4
+
+-- Sieve of Sundaram for finding primes -> I think this will be interesting
+
+-- cartProd : To produce the cartesian product of two lists
+
+cartProd :: [a] -> [b] -> [(a,b)]
+cartProd xs ys = [(x,y) | x <- xs, y <- ys]
