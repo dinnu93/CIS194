@@ -75,3 +75,8 @@ myFoldl f base  = foldr (flip f) base . reverse
 
 cartProd :: [a] -> [b] -> [(a,b)]
 cartProd xs ys = [(x,y) | x <- xs, y <- ys]
+
+sieveSundaram :: Integer -> [Integer]
+sieveSundaram n = map (\a -> 2*a+1) $ filter (\x -> not $ x `elem` compositeList) [1..n]
+  where ordPair = cartProd [1..n] [1..n]
+        compositeList = map (\(x,y) -> x + y + 2*x*y) . filter (\(i,j) -> (1 <= i) && (i <= j) && ((i+j+2*i*j) <= n)) $ ordPair
