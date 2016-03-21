@@ -23,7 +23,7 @@ fun2' = sum . filter even . takeWhile (/=1) . iterate collatz
           | even n = div n 2
           | otherwise = 3 * n + 1
             
--- Exercise-2
+-- Exercise-2 -> Not yet Completed :( 
 
 data Tree a = Leaf
             | Node Integer (Tree a) a (Tree a)
@@ -48,3 +48,21 @@ insert x tree@(Node h lTree node rTree)
 foldTree :: [a] -> Tree a
 foldTree = foldr insert Leaf  
 
+-- Exercise-3
+
+-- 1) xor : returns True if and only if there are an odd number of True values
+-- contained in the input list. It does not matter how many False values the
+-- input list contains
+
+xor :: [Bool] -> Bool
+xor = foldl (\a b -> (a && (not b)) || (b && (not a))) False . filter (\x -> x) 
+
+-- 2) Implementing map as fold
+
+map' :: (a -> b) -> [a] -> [b]
+map' f = foldr (\x acc -> f x : acc) []
+
+-- 3) Implementing foldl using foldr (Optional)
+
+myFoldl :: (a -> b -> a) -> a -> [b] -> a
+myFoldl f base  = foldr (flip f) base . reverse   
