@@ -1,6 +1,9 @@
+{-# LANGUAGE TypeSynonymInstances #-}
+{-# LANGUAGE FlexibleInstances #-}
+
 import ExprT
 import Parser
-
+import qualified StackVM as SVM
 -- Exercise-1
 
 eval :: ExprT -> Integer
@@ -24,6 +27,7 @@ class Expr a where
   add :: a -> a -> a
   mul :: a -> a -> a
 
+    
 instance Expr ExprT where
   lit x = Lit x
   add x y = Add x y
@@ -56,11 +60,11 @@ instance Expr Mod7 where
   mul (Mod7 x) (Mod7 y) = Mod7 (mod (x * y) 7)
 
 
--- Testing
+-- Exercise-5
 
-testExp :: Expr a => Maybe a
-testExp = parseExp lit add mul "(3 * -4) + 5"
-testInteger  = testExp :: Maybe Integer
-testBool     = testExp :: Maybe Bool
-testMM       = testExp :: Maybe MinMax
-testSat      = testExp :: Maybe Mod7
+instance Expr SVM.Program where
+  lit x = [SVM.PushI x]
+  add x y =  x ++ y ++ [SVM.Add]
+  mul x y = x ++ y ++ [SVM.Mul]
+
+  
