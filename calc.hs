@@ -68,3 +68,13 @@ instance Expr SVM.Program where
   mul x y = x ++ y ++ [SVM.Mul]
 
   
+-- Exercise-6
+
+class HasVars a where
+  var :: String -> a
+
+data VarExprT = Lit Integer
+           | Add ExprT ExprT
+           | Mul ExprT ExprT
+  deriving (Show, Eq)
+
