@@ -10,7 +10,7 @@ fibs1 = map fib [0..]
 -- Exercise-2
 
 fib2 = (let fibs a b = a : fibs b (a+b) in fibs 0 1)
-fib2' = streamToList $ streamFromTwoSeeds (+) 0 1
+fib3 = streamToList $ streamFromTwoSeeds (+) 0 1
 -- Exercise-3
 
 data Stream t = Cons t (Stream t)
