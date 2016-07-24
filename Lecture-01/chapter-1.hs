@@ -13,8 +13,8 @@ toDigitsRev n = reverse (toDigits n)
 
 doubleEveryOther :: [Integer] -> [Integer]
 doubleEveryOther [] = []
-doubleEveryOther (x:[]) = [x]
-doubleEveryOther zs = reverse $ map (\s -> if (odd s) then 2*((reverse zs) !! s) else (reverse zs) !! s) [0..((length zs)-1)] 
+doubleEveryOther [x] = [x]
+doubleEveryOther zs = doubleEveryOther (init . init $ zs) ++ [(*2) . last .init $ zs, last zs]
 
 -- Exercise-3
 

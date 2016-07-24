@@ -67,9 +67,11 @@ instance Expr SVM.Program where
   add x y =  x ++ y ++ [SVM.Add]
   mul x y = x ++ y ++ [SVM.Mul]
 
+compile :: String -> Maybe SVM.Program
+compile = parseExp lit add mul
   
 -- Exercise-6
-
+{--
 class HasVars a where
   var :: String -> a
 
@@ -78,3 +80,4 @@ data VarExprT = Lit Integer
            | Mul ExprT ExprT
   deriving (Show, Eq)
 
+--}

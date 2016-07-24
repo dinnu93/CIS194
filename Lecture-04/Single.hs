@@ -1,6 +1,7 @@
 -- Chapter-4 Exercises
 
 -- Exercise-1
+import Data.List (foldl')
 
 fun1 :: [Integer] -> Integer
 fun1 []     = 1
@@ -25,28 +26,22 @@ fun2' = sum . filter even . takeWhile (/=1) . iterate collatz
             
 -- Exercise-2 -> Not yet Completed :( 
 
-data Tree a = Leaf
-            | Node Integer (Tree a) a (Tree a)
-            deriving (Show, Eq)
-
-treeHeight :: Tree a -> Integer
-treeHeight Leaf = -1
-treeHeight (Node h _ _ _) = h
-
-balancedTree :: Tree a -> Bool
-balancedTree Leaf = True
-balancedTree (Node h lTree node rTree) = (balancedTree lTree) && (balancedTree rTree) && balHeight
-  where balHeight = abs ((treeHeight lTree) - (treeHeight rTree)) <= 1
-
-
-insert :: a -> Tree a -> Tree a
-insert x Leaf = Node 0 Leaf x Leaf
-insert x tree@(Node h lTree node rTree)
-  | min (treeHeight lTree) (treeHeight rTree) == (treeHeight lTree) =  Node (h+1) (insert x lTree) node rTree
-  | otherwise = Node (h+1) lTree node (insert x rTree)
+data Tree a = Leaf | Node Integer (Tree a) a (Tree a) deriving (Show, Eq)
 
 foldTree :: [a] -> Tree a
-foldTree = foldr insert Leaf  
+foldTree = foldl addToTree Leaf
+
+heightOfTree :: Tree a -> Integer
+heightOfTree Leaf = -1
+heightOfTree (Node h _ _ _) = h
+
+addToTree :: Tree a -> a -> Tree a
+addToTree Leaf x = Node 0 Leaf x Leaf
+addToTree (Node height lTree node rTree) x
+  | hRight < hLeft = Node height lTree node (addToTree rTree x)
+  | otherwise = Node (height + 1) (addToTree lTree x) node rTree
+  where hRight = heightOfTree rTree
+        hLeft = heightOfTree lTree
 
 -- Exercise-3
 
